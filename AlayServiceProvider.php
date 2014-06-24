@@ -22,7 +22,7 @@ class AlayServiceProvider extends ServiceProvider {
 
 		// While any administrative controller could be automatically enabled from application,
 		// we still need to register any "front" controllers (if our package provides one.)
-		$this->app['router']->controller('alay', 'Saas\Alay\Controllers\FooController');
+		$this->app['router']->controller('alay', 'Saas\Alay\Controllers\AlayController');
 
 		// EXPERIMENTAL!
 		// Here we register widget to generate a partial view
@@ -37,15 +37,9 @@ class AlayServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		// Here you may register your package's specific provider
-		$this->app['alay.foo'] = $this->app->share(function($app)
+		$this->app['alay.Alay'] = $this->app->share(function($app)
 		{
-			return new Foo($app);
-		});
-
-		// Attach the creator
-		$this->app['alay.creator'] = $this->app->share(function($app)
-		{
-			return new AlayCreator($app);
+			return new Alay($alay);
 		});
 	}
 
@@ -71,43 +65,17 @@ class AlayServiceProvider extends ServiceProvider {
 
 				// Alay sidebar start
 				'url' => '#',
-				'label' => 'Dummy',
+				'label' => 'Alay',
 				'icon' => 'lightbulb',             
 				'data' => array(
 					// Example sub-menu
 					array(
-						'admin_route' => 'alay.actionsomething',// Admin route
-						'admin_label' => 'Something',            // Menu label
+						'admin_route' => 'alay.index',// Admin route
+						'admin_label' => 'Overview',            // Menu label
 						'icon' => 'caret-right',                 // Icon to be used
 						'childs' => array()
 					),
 
-					array(
-						'admin_route' => 'index',              // Admin route
-						'admin_label' => 'Back to dashboard?', // Menu label
-						'icon' => 'caret-right',               // Icon to be used
-						'childs' => array()
-					),
-
-					// Example sub-menu that have another sub
-					array(
-						'admin_route' => 'alay.actionsomething',    // Admin route
-						'admin_label' => 'Something With Sub-menu',  // Menu label
-						'icon' => 'caret-right',                     // Icon to be used
-						'childs' => array(                           // Menu-sub-context
-							array(
-								'admin_route' => 'alay.actionsomething', // Admin route
-								'admin_label' => 'Sub-Something',         // Menu label
-								'icon' => 'caret-right',                  // Icon to be used
-								'childs' => array(),                      // Sub-menu
-							),
-							array(
-								'admin_route' => 'index',           // Admin route
-								'admin_label' => 'Back to admin',   // Menu label
-								'icon' => 'caret-right',            // Icon to be used
-								'childs' => array(),                // Sub-menu
-							)
-						)
 					),
 				)
 				// Alay sidebar end
