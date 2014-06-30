@@ -7,4 +7,9 @@ class Alay extends Model
 	protected $table = 'alay';
 	protected $guarded = array();
 
+	public function hastag()
+    {
+        return $this->hasOne('Phone');
+    }
+
 }

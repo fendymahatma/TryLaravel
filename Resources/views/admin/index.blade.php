@@ -13,5 +13,18 @@
 @stop
 
 @section('admin_content')
-{{ trans('alay::admin.hello') }}
+	
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-6'>
+			Chose Your Social Acount Alayers !!
+			
+		</div>
+		<div class='col-md-6'>
+			Input Your Status - {{ Auth::user()->email }} - {{ Auth::user()->first_name }}
+
+		</div>
+	</div>
+</div><!-- container -->
+
 @stop
