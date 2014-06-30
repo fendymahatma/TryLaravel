@@ -3,7 +3,9 @@
 namespace Saas\Alay\Controllers;
 
 use Saas\Admin\PackageController as BaseController;
-use User, Group, Auth;
+use Saas\Alay\Models\Alay;
+use Saas\Alay\Models\Hastag;
+use User, Groups, Auth;
 
 class AdminController extends BaseController
 {
@@ -12,10 +14,14 @@ class AdminController extends BaseController
 
 	public function getIndex()
 	{
-		$alay = Alay::alay();
-		$hastag = Hastag::hastag();
+		$alay = Alay::all();
+		$hastag = Hastag::all();
 		$user = Auth::user();
-		$user->load('socialConnection');
+		$brands = Groups::getRelationProvider()->findUserBrands($user->id, true);
+		$providers = array();
+		foreach($user->socialConnections()->get()->all() as $provider) {
+			$providers[$provider->provider] = $provider; 
+		}
 
 
 		$this->viewData = array(
@@ -23,6 +29,8 @@ class AdminController extends BaseController
 			'user' => $user,
 			'alay' => $alay,
 			'hastag' => $hastag,
+			'brands' => $brands,
+			'providers' => $providers,
 		);
 
 		$this->setupLayout();

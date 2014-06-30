@@ -9,7 +9,7 @@ class Alay extends Model
 
 	public function hastag()
     {
-        return $this->hasOne('Phone');
+        return $this->hasOne('Saas\Alay\Models\Hastag', 'alay_id');
     }
 
 }
