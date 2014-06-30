@@ -7,9 +7,9 @@ class Alay extends Model
 	protected $table = 'alay';
 	protected $guarded = array();
 
-	public function hastag()
+	public function hastags()
     {
-        return $this->hasOne('Saas\Alay\Models\Hastag', 'alay_id');
+        return $this->hasMany('Saas\Alay\Models\Hastag', 'alay_id');
     }
 
 }
