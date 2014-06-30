@@ -19,13 +19,13 @@ class AlayServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('saas/alay', 'alay', __DIR__.'/Resources/');
-		// $this->app['router']->post('alay/metric', array(
-		// 	'as' => 'alay.metric',
-		// 	'before' => 'can_access_alay_panel',
-		// 	function() {
-		// 		return app('alay.metric')->handleRequest(app('request'));
-		// 	}
-		// ));
+		
+		$this->app['router']->get('alay/metric', array(
+			'as' => 'alay.metric',
+			function() {
+				return app('admin.metric')->handleRequest(app('request'));
+			}
+		));
 		// EXPERIMENTAL!
 		// Here we register widget to generate a partial view
 		//$this->app['admin.package_widget']->register('alay', 'Saas\Alay\Widgets\BarWidget');
@@ -43,6 +43,11 @@ class AlayServiceProvider extends ServiceProvider {
 		{
 			return new Alay($alay);
 		});
+
+		// $this->app['alay.metric'] = $this->app->share(function($app)
+		// {			
+		// 	return new Metric($app);
+		// });
 	}
 
 	/**
