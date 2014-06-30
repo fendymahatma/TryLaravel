@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alay extends Model
 {
-	protected $table = 'Alay';
+	protected $table = 'alay';
 	protected $guarded = array();
 
 }

@@ -19,14 +19,16 @@ class AlayServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('saas/alay', 'alay', __DIR__.'/Resources/');
-
-		// While any administrative controller could be automatically enabled from application,
-		// we still need to register any "front" controllers (if our package provides one.)
-		$this->app['router']->controller('alay', 'Saas\Alay\Controllers\AlayController');
-
+		// $this->app['router']->post('alay/metric', array(
+		// 	'as' => 'alay.metric',
+		// 	'before' => 'can_access_alay_panel',
+		// 	function() {
+		// 		return app('alay.metric')->handleRequest(app('request'));
+		// 	}
+		// ));
 		// EXPERIMENTAL!
 		// Here we register widget to generate a partial view
-		$this->app['admin.package_widget']->register('alay', 'Saas\Alay\Widgets\BarWidget');
+		//$this->app['admin.package_widget']->register('alay', 'Saas\Alay\Widgets\BarWidget');
 	}
 
 	/**
@@ -37,7 +39,7 @@ class AlayServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		// Here you may register your package's specific provider
-		$this->app['alay.Alay'] = $this->app->share(function($app)
+		$this->app['alay.alay'] = $this->app->share(function($app)
 		{
 			return new Alay($alay);
 		});
@@ -70,15 +72,13 @@ class AlayServiceProvider extends ServiceProvider {
 				'data' => array(
 					// Example sub-menu
 					array(
-						'admin_route' => 'alay.index',// Admin route
+						'admin_route' => 'admin.index',// Admin route
 						'admin_label' => 'Overview',            // Menu label
 						'icon' => 'caret-right',                 // Icon to be used
 						'childs' => array()
 					),
-
-					),
 				)
-				// Alay sidebar end
+				// Leaderboard sidebar end
 
 			)
 		);
