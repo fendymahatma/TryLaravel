@@ -1,6 +1,10 @@
 <?php namespace Saas\Alay;
 
 use Saas\Support\ServiceProvider;
+use Saas\Admin\Metric;
+use Saas\Alay\Models\Hastag;
+use Saas\Alay\Models\Alay;
+use Saas\Alay\Metrics\HastagMetric;
 
 class AlayServiceProvider extends ServiceProvider {
 
@@ -20,10 +24,24 @@ class AlayServiceProvider extends ServiceProvider {
 	{
 		$this->package('saas/alay', 'alay', __DIR__.'/Resources/');
 		
-		$this->app['router']->get('alay/metric', array(
+		$app = $this->app;
+		$this->app['router']->post('alay/metric', array(
 			'as' => 'alay.metric',
-			function() {
-				return app('admin.metric')->handleRequest(app('request'));
+			function() use ($app) {
+				$metric = new Metric($app);
+				
+				//todo query kan hastag secara unik
+				$hastags = Hastag::groupBy('hastag.hastag')->get();
+				//loop hasil query hastag
+				$hastags->each(function($item) use($metric) {
+					//inisiasikan hastag metric
+					$hastagMetric = new HastagMetric();
+					//set hastag metric name sebagai title dari hastag
+					$hastagMetric->setName($item->hastag);
+					//set hastag metric kedalam metric contex
+					$metric->setContext($hastagMetric);
+				});
+				return $metric->handleRequest(app('request'));
 			}
 		));
 		// EXPERIMENTAL!
