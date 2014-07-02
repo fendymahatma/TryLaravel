@@ -31,7 +31,7 @@ class AlayServiceProvider extends ServiceProvider {
 				$metric = new Metric($app);
 				
 				//todo query kan hastag secara unik
-				$hastags = Hastag::groupBy('hastag.hastag')->get();
+				$hastags = Hastag::orderBy('hastag.hastag', 'desc')->groupBy('hastag.hastag')->take(5)->get();
 				//loop hasil query hastag
 				$hastags->each(function($item) use($metric) {
 					//inisiasikan hastag metric
