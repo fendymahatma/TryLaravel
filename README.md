@@ -1,4 +1,4 @@
-alay
+Try for code
 ====
 
-alay ajah
+Have fun
